@@ -263,7 +263,7 @@ class ControllerPaymentAsaasCartao extends Controller {
 
 			$parcelas[] = [
 				'parcelas' => $i,
-				'valor_parcela' => $this->currency->format(round($valorParcela, 2), $this->session->data['currency']),
+				'valor_parcela' => $this->currency->format(round($valorParcela, 2)),
 				'preco' => round($valorParcela, 2),
 				'valor_total' => round($valorTotalParcela, 2),
 				'tem_juros' => $temJuros

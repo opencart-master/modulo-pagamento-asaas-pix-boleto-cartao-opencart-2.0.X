@@ -16,7 +16,7 @@
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($ord);
         		
-		if ($order_info && $order_info['code'] == 'asaas_pix') {
+		if ($order_info && $order_info['payment_code'] == 'asaas_pix') {
     if ($this->config->get('asaas_pix_mode')) {
 			$mode = false;
 		} else {
@@ -33,7 +33,7 @@
 		  $data['infopix'] = false;  
 		}
 
-    if ($order_info && $order_info['code'] == 'asaas_boleto') {
+    if ($order_info && $order_info['payment_code'] == 'asaas_boleto') {
     if ($this->config->get('asaas_boleto_mode')) {
 			$mode = false;
 		} else {

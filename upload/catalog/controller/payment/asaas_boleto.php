@@ -4,6 +4,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 		$this->load->language('payment/asaas_boleto');
 
 		$data['modo'] = $this->config->get('asaas_boleto_mode');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/asaas_boleto.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/asaas_boleto.tpl', $data);

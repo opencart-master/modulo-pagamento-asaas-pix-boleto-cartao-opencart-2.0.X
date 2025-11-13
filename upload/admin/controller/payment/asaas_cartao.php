@@ -31,7 +31,7 @@ class ControllerPaymentAsaasCartao extends Controller {
 		$data['entry_key'] = $this->language->get('entry_key');
 		$data['entry_wb'] = $this->language->get('entry_wb');
 		$data['entry_mode'] = $this->language->get('entry_mode');
-		$data['entry_doc'] = $this->language->get('entry_doc1');
+		$data['entry_doc'] = $this->language->get('entry_doc');
 		$data['entry_doc1'] = $this->language->get('entry_doc1');
 		$data['entry_number'] = $this->language->get('entry_number');
 		$data['entry_juros'] = $this->language->get('entry_juros');

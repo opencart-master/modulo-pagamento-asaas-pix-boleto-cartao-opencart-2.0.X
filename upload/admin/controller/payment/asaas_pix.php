@@ -85,6 +85,8 @@ class ControllerPaymentAsaasPix extends Controller {
 
 		$data['action'] = $this->url->link('payment/asaas_pix', 'token=' . $this->session->data['token'], 'SSL');
 
+		$data['webhook'] = $this->url->link('payment/asaas_pix/webhook', 'token=' . $this->session->data['token'], 'SSL');
+
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['asaas_pix_api_key'])) {
@@ -206,5 +208,73 @@ class ControllerPaymentAsaasPix extends Controller {
         `date_create` datetime NOT NULL,
         PRIMARY KEY (`order_id`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3; ");
+    }
+
+	public function webhook() {
+		$this->load->language('extension/payment/asaas_pix');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$webhook = json_encode(array(
+		"events" => [
+			"PAYMENT_AUTHORIZED",
+    		"PAYMENT_CONFIRMED",
+			"PAYMENT_APPROVED_BY_RISK_ANALYSIS",
+			"PAYMENT_CHARGEBACK_DISPUTE",
+			"PAYMENT_REFUNDED",
+			"PAYMENT_AWAITING_RISK_ANALYSIS",
+			"PAYMENT_REPROVED_BY_RISK_ANALYSIS",
+			"PAYMENT_RECEIVED",
+			"PAYMENT_OVERDUE",
+    		"PAYMENT_CHARGEBACK_DISPUTE"
+		],
+		"name" => "opencart-webhook",
+  		"url" =>  HTTPS_CATALOG. "index.php?route=payment/asaas_callback",
+ 		"enabled" => true,
+  		"apiVersion" => 3,
+		"authToken" => $this->config->get('asaas_pix_wb'),
+		"sendType" => "SEQUENTIALLY",
+		"interrupted" => false,
+		"email" => $this->config->get('config_email')
+		));
+
+		$this->load->model('setting/setting');
+		if ($this->config->get('asaas_pix_mode')) {
+			$mode = false;
+		} else {
+			$mode = true;
+		}
+		$resposta = $this->createWebhook($webhook, $mode);
+
+		if(isset($resposta['errors'])) {
+		$this->error['warning'] = $resposta['errors']['code'];	
+		} else {
+		$this->session->data['success'] = "Webhook criado com sucesso!";
+		}
+
+		$this->index();
+	}
+
+	public function createWebhook($json_convert, $sandbox = true) {
+		$url =  $sandbox ? 'https://sandbox.asaas.com/api/v3/' : 'https://www.asaas.com/api/v3/';
+    	$token = $this->config->get('asaas_pix_api_key');
+		$user_agent = base64_decode('TWFzdGVyLzEuMC4wLjAgKFBsYXRhZm9ybWEgb3BlbmNhcnQuY29tIC0gREVWIE9wZW5jYXIgTWFzdGVyKQ==');
+    	$headers = array('Accept: application/json', 'Content-Type: application/json;charset=UTF-8', 'User-Agent: ' . $user_agent , 'access_token: ' . $token);
+        $soap_do = curl_init();
+        curl_setopt($soap_do, CURLOPT_URL, $url . 'webhooks');
+        curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($soap_do, CURLOPT_TIMEOUT,        10);
+        curl_setopt($soap_do, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($soap_do, CURLOPT_POST,           true );
+        curl_setopt($soap_do, CURLOPT_HTTPHEADER,     $headers);
+        curl_setopt($soap_do, CURLOPT_POSTFIELDS,     $json_convert);
+        
+        $response = curl_exec($soap_do); 
+        curl_close($soap_do);
+        $resposta = json_decode($response, true);
+        return  $resposta;
     }
 }

@@ -81,7 +81,7 @@
                             <option value="">Selecione</option>
 							<?php foreach($parc as $parcela) { ?>
                             <option value="<?php echo $parcela['parcelas']; ?>:<?php echo $parcela['preco']; ?>"><?php echo $parcela['parcelas']; ?>X - <?php echo $parcela['valor_parcela']; ?> 
-                            <?php if ($parcela['tem_juros']) { ?> com juros <?php else ?> sem juros <?php } ?>
+                            <?php if ($parcela['tem_juros']) { ?> com juros <?php } else { ?> sem juros <?php } ?>
                             </option>
                             <?php } ?>
                         </select>

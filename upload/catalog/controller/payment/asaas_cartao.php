@@ -10,7 +10,7 @@ class ControllerPaymentAsaasCartao extends Controller {
 		$parcela_sem_juros = $this->config->get('asaas_cartao_parc1');
 		$juros = $this->config->get('asaas_cartao_juros');
 
-		$data['vtotal'] = $this->currency->format($order_info['total']);
+		$data['vtotal'] = $this->currency->format($order_info['total'], $this->session->data['currency']);
 
 		$data['parc'] = $this->calcularParcelamento($order_info['total'], $parcela_total, $parcela_sem_juros, $juros);
 		$data['modo'] = $this->config->get('asaas_cartao_mode');
@@ -263,7 +263,7 @@ class ControllerPaymentAsaasCartao extends Controller {
 
 			$parcelas[] = [
 				'parcelas' => $i,
-				'valor_parcela' => $this->currency->format(round($valorParcela, 2)),
+				'valor_parcela' => $this->currency->format(round($valorParcela, 2), $this->session->data['currency']),
 				'preco' => round($valorParcela, 2),
 				'valor_total' => round($valorTotalParcela, 2),
 				'tem_juros' => $temJuros

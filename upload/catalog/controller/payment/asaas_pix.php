@@ -5,6 +5,7 @@ class ControllerPaymentAsaasPix extends Controller {
 
 		$data['modo'] = $this->config->get('asaas_pix_mode');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/asaas_pix.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/asaas_pix.tpl', $data);
@@ -58,9 +59,9 @@ class ControllerPaymentAsaasPix extends Controller {
 
 			$payment = $asaas->createPayment([
 			"customer" => $cid,
-			"billingType" => "pix",
+			"billingType" => "PIX",
 			"value" => $order_info['total'],
-			"dueDate" => date('Y-m-d', strtotime('+3 days')),
+			"dueDate" => date('Y-m-d', strtotime('+1 days')),
 			"description" => "Pedido " . $order_info['order_id'],
 			"externalReference"	=> $order_info['order_id'],
 			//"callback" => array("successUrl" => HTTPS_SERVER . "index.php?route=checkout/success")
@@ -71,7 +72,7 @@ class ControllerPaymentAsaasPix extends Controller {
 			if (isset($payment['id'])) {
 			$this->cadId($payment['id'], $order_info['order_id']);
 		    $comment .= "Pagamento ID: " . $payment['id'] . "\n";
-		    $comment .= "Link do QRCODE: <a href='" . $payment['bankSlipUrl'] . "' class='label label-info' target='_blank'> VER 2ª via pix </a> \n";
+		     $comment .= "Link do QRCODE: <a href='" . $payment['invoiceUrl'] . "' class='label label-info' target='_blank'> VER 2ª via Pix </a> \n";
 		    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('asaas_pix_order_status_id'), $comment);
 		    $json['redirect'] = $this->url->link('checkout/success');
 			} else {
@@ -92,7 +93,7 @@ class ControllerPaymentAsaasPix extends Controller {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "asaas_callback` WHERE order_id = '" . (int)$order_id . "'");
 		if ($order_query->num_rows) {
 		} else {
-    	$this->db->query("INSERT INTO `" . DB_PREFIX . "asaas_callback` SET order_id = '" . (int)$order_id . "', pay_id = '" . $this->db->escape($id) . "', type = 'pix', date_create = NOW()");
+    	$this->db->query("INSERT INTO `" . DB_PREFIX . "asaas_callback` SET order_id = '" . (int)$order_id . "', pay_id = '" . $this->db->escape($id) . "', type = 'PIX', date_create = NOW()");
 		}
 	}
 

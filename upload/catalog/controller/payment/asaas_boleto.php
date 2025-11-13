@@ -5,6 +5,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 
 		$data['modo'] = $this->config->get('asaas_boleto_mode');
 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/asaas_boleto.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/asaas_boleto.tpl', $data);
@@ -71,7 +72,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 			if (isset($payment['id'])) {
 			$this->cadId($payment['id'], $order_info['order_id']);
 		    $comment .= "Pagamento ID: " . $payment['id'] . "\n";
-		    $comment .= "Link do QRCODE: <a href='" . $payment['bankSlipUrl'] . "' class='label label-info' target='_blank'> VER 2ª via boleto </a> \n";
+		    $comment .= "Link do Boleto: <a href='" . $payment['bankSlipUrl'] . "' class='label label-info' target='_blank'> VER 2ª via boleto </a> \n";
 		    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('asaas_boleto_order_status_id'), $comment);
 		    $json['redirect'] = $this->url->link('checkout/success');
 			} else {

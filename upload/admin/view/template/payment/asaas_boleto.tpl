@@ -67,7 +67,7 @@
               <?php } ?>	 
 			      </div>
 		      </div>
-          <div class="form-group required">
+          <div class="form-group">
 		        <label class="col-sm-2 control-label"><?php echo $entry_doc1; ?></label>
 			      <div class="col-sm-10">
 			        <select name="asaas_boleto_doc1" id="input-doc1" class="form-control">

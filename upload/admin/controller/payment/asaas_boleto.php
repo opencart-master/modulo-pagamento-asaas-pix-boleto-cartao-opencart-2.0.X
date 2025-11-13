@@ -27,9 +27,17 @@ class ControllerPaymentAsaasBoleto extends Controller {
 		$data['text_sand'] = $this->language->get('text_sand');
 		$data['text_prod'] = $this->language->get('text_prod');
 
-		$data['entry_bank'] = $this->language->get('entry_bank');
+		$data['entry_key'] = $this->language->get('entry_key');
+		$data['entry_wb'] = $this->language->get('entry_wb');
+		$data['entry_mode'] = $this->language->get('entry_mode');
+		$data['entry_doc'] = $this->language->get('entry_docy');
+		$data['entry_doc1'] = $this->language->get('entry_doc1');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
+		$data['entry_order_status2'] = $this->language->get('entry_order_status2');
+		$data['entry_order_status3'] = $this->language->get('entry_order_status3');
+		$data['entry_order_status4'] = $this->language->get('entry_order_status4');
+		$data['entry_order_status5'] = $this->language->get('entry_order_status5');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -141,7 +149,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 		} elseif(!empty($this->config->get('asaas_wb'))) {
 			$data['asaas_wb'] = $this->config->get('asaas_wb');
 		} else {
-			$data['asaas_wb'] = token(10);
+			$data['asaas_wb'] = uniqid();
 		}
 
 		if (isset($this->request->post['asaas_boleto_sort_order'])) {

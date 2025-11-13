@@ -39,7 +39,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
             <div class="col-sm-10">
               <input type="text" name="asaas_boleto_api_key" value="<?php echo $asaas_boleto_api_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />

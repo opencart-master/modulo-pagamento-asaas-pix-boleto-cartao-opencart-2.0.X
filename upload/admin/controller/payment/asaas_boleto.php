@@ -26,6 +26,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
 		$data['text_sand'] = $this->language->get('text_sand');
 		$data['text_prod'] = $this->language->get('text_prod');
+		$data['text_none'] = $this->language->get('text_none');
 
 		$data['entry_key'] = $this->language->get('entry_key');
 		$data['entry_wb'] = $this->language->get('entry_wb');

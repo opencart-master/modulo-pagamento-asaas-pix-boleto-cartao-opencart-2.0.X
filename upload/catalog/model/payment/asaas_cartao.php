@@ -1,17 +1,17 @@
 <?php
-class ModelPaymentAsaasBoleto extends Model {
+class ModelPaymentAsaasCartao extends Model {
 	public function getMethod($address, $total) {
-		$this->load->language('payment/asaas_boleto');
-        $status = $this->config->get('asaas_boleto_status');
+		$this->load->language('payment/asaas_cartao');
+        $status = $this->config->get('asaas_cartao_status');
 
 		$method_data = array();
 
 		if ($status) {
 			$method_data = array(
-				'code'       => 'asaas_boleto',
+				'code'       => 'asaas_cartao',
 				'title'      => $this->language->get('text_title'),
 				'terms'      => '',
-				'sort_order' => $this->config->get('asaas_boleto_sort_order')
+				'sort_order' => $this->config->get('asaas_cartao_sort_order')
 			);
 		}
 

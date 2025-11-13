@@ -99,7 +99,7 @@
 		</operation>
 	</file>
 
-    <file path="catalog/view/theme/*/template/common/success.twig">
+    <file path="catalog/view/theme/*/template/common/success.tpl">
         <operation error="skip">
         <search trim="true"><![CDATA[<?php echo $text_message; ?>]]></search>
 		<add position="before"><![CDATA[

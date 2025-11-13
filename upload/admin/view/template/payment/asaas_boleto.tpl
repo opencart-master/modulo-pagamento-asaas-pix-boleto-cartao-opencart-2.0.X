@@ -43,8 +43,30 @@
             <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
             <div class="col-sm-10">
               <input type="text" name="asaas_boleto_api_key" value="<?php echo $asaas_boleto_api_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
+            <?php if ($error_key) { ?>
+              <div class="text-danger"><?php echo $error_key; ?></div>
+            <?php } ?>
             </div>
           </div>
+          <div class="form-group required">
+		        <label class="col-sm-2 control-label"><?php echo $entry_doc; ?></label>
+			      <div class="col-sm-10">
+			        <select name="asaas_boleto_doc" id="input-doc" class="form-control">
+				        <option value=""><?php echo $text_none; ?></option>
+				        <?php foreach($custom_fields as $custom_field) { ?>
+				        <?php if ($custom_field['location'] == 'account') { ?>
+					      <?php if ($asaas_boleto_doc == $custom_field['custom_field_id']) { ?>
+					      <option value="<?php echo $custom_field['custom_field_id']; ?>" selected><?php echo $custom_field['name']; ?></option>
+					      <?php } else { ?>
+					      <option value="<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></option>
+					      <?php } ?>
+					      <?php } ?><?php } ?>
+			        </select>
+			        <?php if ($error_doc) { ?>
+                <div class="text-danger"><?php echo $error_doc; ?></div>
+              <?php } ?>	 
+			      </div>
+		      </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
             <div class="col-sm-10">

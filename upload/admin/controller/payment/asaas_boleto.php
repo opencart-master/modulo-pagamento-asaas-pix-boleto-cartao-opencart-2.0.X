@@ -162,9 +162,9 @@ class ControllerPaymentAsaasBoleto extends Controller {
 			$data['asaas_boleto_doc1'] = $this->config->get('asaas_boleto_doc1');
 		}
 
-		$this->load->model('customer/custom_field');
+		$this->load->model('sale/custom_field');
 		
-        $data['custom_fields'] = $this->model_customer_custom_field->getCustomFields();
+        $data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

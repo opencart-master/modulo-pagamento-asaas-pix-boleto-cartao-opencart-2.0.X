@@ -31,7 +31,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 		$data['entry_key'] = $this->language->get('entry_key');
 		$data['entry_wb'] = $this->language->get('entry_wb');
 		$data['entry_mode'] = $this->language->get('entry_mode');
-		$data['entry_doc'] = $this->language->get('entry_docy');
+		$data['entry_doc'] = $this->language->get('entry_doc1');
 		$data['entry_doc1'] = $this->language->get('entry_doc1');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');

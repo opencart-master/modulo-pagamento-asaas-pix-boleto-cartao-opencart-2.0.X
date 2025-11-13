@@ -34,6 +34,9 @@ class ControllerPaymentAsaasCartao extends Controller {
 		$data['entry_doc'] = $this->language->get('entry_doc1');
 		$data['entry_doc1'] = $this->language->get('entry_doc1');
 		$data['entry_number'] = $this->language->get('entry_number');
+		$data['entry_juros'] = $this->language->get('entry_juros');
+		$data['entry_parc'] = $this->language->get('entry_parc');
+		$data['entry_parc1'] = $this->language->get('entry_parc1');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_order_status2'] = $this->language->get('entry_order_status2');
@@ -182,6 +185,30 @@ class ControllerPaymentAsaasCartao extends Controller {
 			$data['asaas_cartao_doc1'] = $this->request->post['asaas_cartao_doc1'];
 		} else {
 			$data['asaas_cartao_doc1'] = $this->config->get('asaas_cartao_doc1');
+		}
+
+		if (isset($this->request->post['asaas_cartao_parc'])) {
+			$data['asaas_cartao_parc'] = $this->request->post['asaas_cartao_parc'];
+		} elseif(!empty($this->config->get('asaas_cartao_parc'))) {
+			$data['asaas_cartao_parc'] = $this->config->get('asaas_cartao_parc');
+		} else {
+			$data['asaas_cartao_parc'] = 12;
+		}
+
+		if (isset($this->request->post['asaas_cartao_parc1'])) {
+			$data['asaas_cartao_parc1'] = $this->request->post['asaas_cartao_parc1'];
+		} elseif(!empty($this->config->get('asaas_cartao_parc1'))) {
+			$data['asaas_cartao_parc1'] = $this->config->get('asaas_cartao_parc1');
+		} else {
+			$data['asaas_cartao_parc1'] = 12;
+		}
+
+		if (isset($this->request->post['asaas_cartao_juros'])) {
+			$data['asaas_cartao_juros'] = $this->request->post['asaas_cartao_juros'];
+		} elseif(!empty($this->config->get('asaas_cartao_juros'))) {
+			$data['asaas_cartao_juros'] = $this->config->get('asaas_cartao_juros');
+		} else {
+			$data['asaas_cartao_juros'] = 0.00;
 		}
 
 		$this->load->model('sale/custom_field');

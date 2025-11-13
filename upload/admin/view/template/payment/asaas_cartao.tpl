@@ -67,6 +67,22 @@
               <?php } ?>	 
 			      </div>
 		      </div>
+          <div class="form-group">
+		        <label class="col-sm-2 control-label"><?php echo $entry_doc1; ?></label>
+			      <div class="col-sm-10">
+			        <select name="asaas_cartao_doc1" id="input-doc1" class="form-control">
+				        <option value=""><?php echo $text_none; ?></option>
+				        <?php foreach($custom_fields as $custom_field) { ?>
+				        <?php if ($custom_field['location'] == 'account') { ?>
+					      <?php if ($asaas_cartao_doc1 == $custom_field['custom_field_id']) { ?>
+					      <option value="<?php echo $custom_field['custom_field_id']; ?>" selected><?php echo $custom_field['name']; ?></option>
+					      <?php } else { ?>
+					      <option value="<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></option>
+					      <?php } ?>
+					      <?php } ?><?php } ?>
+			        </select>
+			      </div>
+		      </div>
           <div class="form-group required">
 		        <label class="col-sm-2 control-label"><?php echo $entry_number; ?></label>
 			      <div class="col-sm-10">
@@ -87,21 +103,23 @@
 			      </div>
 		      </div>
           <div class="form-group">
-		        <label class="col-sm-2 control-label"><?php echo $entry_doc1; ?></label>
-			      <div class="col-sm-10">
-			        <select name="asaas_cartao_doc1" id="input-doc1" class="form-control">
-				        <option value=""><?php echo $text_none; ?></option>
-				        <?php foreach($custom_fields as $custom_field) { ?>
-				        <?php if ($custom_field['location'] == 'account') { ?>
-					      <?php if ($asaas_cartao_doc1 == $custom_field['custom_field_id']) { ?>
-					      <option value="<?php echo $custom_field['custom_field_id']; ?>" selected><?php echo $custom_field['name']; ?></option>
-					      <?php } else { ?>
-					      <option value="<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></option>
-					      <?php } ?>
-					      <?php } ?><?php } ?>
-			        </select>
-			      </div>
-		      </div>
+            <label class="col-sm-2 control-label" for="input-parc"><?php echo $entry_parc; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="asaas_cartao_parc" value="<?php echo $asaas_cartao_parc; ?>" placeholder="<?php echo $entry_parc; ?>" id="input-parc" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-parc1"><?php echo $entry_parc1; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="asaas_cartao_parc1" value="<?php echo $asaas_cartao_parc1; ?>" placeholder="<?php echo $entry_parc1; ?>" id="input-parc1" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-juros"><?php echo $entry_juros; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="asaas_cartao_juros" value="<?php echo $asaas_cartao_juros; ?>" placeholder="<?php echo $entry_juros; ?>" id="input-juros" class="form-control" />
+            </div>
+          </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
             <div class="col-sm-10">

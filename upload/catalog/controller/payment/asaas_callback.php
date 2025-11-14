@@ -1,12 +1,11 @@
 <?php
 class ControllerPaymentAsaasCallback extends Controller {
-    
     public function index() {
 	 $input = file_get_contents('php://input');
      $payload = json_decode($input, true);
         
         if ($this->retorno()) {
-        //$this->log->write("SUCCESS CALLBACK: " . $input);
+            //$this->log->write("SUCCESS CALLBACK: " . $input);
         if ($payload && isset($payload['event']) && isset($payload['payment'])) {
         //CARD    
         if ($payload['payment']['billingType'] == 'CREDIT_CARD') {
@@ -48,7 +47,8 @@ class ControllerPaymentAsaasCallback extends Controller {
                         $comment = "Reembolso API";
                         break;
                     default:
-                        // outros eventos
+                        $ord_status = 0;
+                        $comment = "";
                         break;
                 }
                  /*alternativa  
@@ -58,7 +58,7 @@ class ControllerPaymentAsaasCallback extends Controller {
                  $this->model_checkout_order->addOrderHistory($order_id, $ord_status, $comment, false);   
                  }
                  */ 
-                if ($ord_status != $order_info['order_status_id']) {
+                if ($ord_status && $ord_status != $order_info['order_status_id']) {
                     $this->model_checkout_order->addOrderHistory($order_id, $ord_status, $comment, true);
                 }
             }
@@ -101,11 +101,12 @@ class ControllerPaymentAsaasCallback extends Controller {
                         $comment = "Reembolso API";
                         break;
                     default:
-                        // outros eventos
+                        $ord_status = 0;
+                        $comment = "";
                         break;
                 }
 
-                if ($ord_status != $order_info['order_status_id']) {
+                if ($ord_status && $ord_status != $order_info['order_status_id']) {
                     $this->model_checkout_order->addOrderHistory($order_id, $ord_status, $comment, true);
                 }
             }
@@ -149,11 +150,12 @@ class ControllerPaymentAsaasCallback extends Controller {
                         $comment = "Reembolso API";
                         break;
                     default:
-                        // outros eventos
+                        $ord_status = 0;
+                        $comment = "";
                         break;
                 }
 
-                if ($ord_status != $order_info['order_status_id']) {
+                if ($ord_status && $ord_status != $order_info['order_status_id']) {
                     $this->model_checkout_order->addOrderHistory($order_id, $ord_status, $comment, true);
                 }
             }
@@ -162,7 +164,7 @@ class ControllerPaymentAsaasCallback extends Controller {
 	    }
             
         } else {
-            $this->log->write("ERROR CALLBACK: " . $input);
+        $this->log->write("ERROR CALLBACK: " . $input);
         }
 
 	}

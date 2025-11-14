@@ -142,7 +142,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-order-status5"><?php echo $entry_order_status5; ?></label>
             <div class="col-sm-10">
-              <select name="asaas_boleto_order_status_id" id="input-order-status5" class="form-control">
+              <select name="asaas_boleto_order_status_id5" id="input-order-status5" class="form-control">
                 <?php foreach ($order_statuses as $order_status) { ?>
                 <?php if ($order_status['order_status_id'] == $asaas_boleto_order_status_id5) { ?>
                 <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>

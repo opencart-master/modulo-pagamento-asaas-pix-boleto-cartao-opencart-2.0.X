@@ -3,15 +3,10 @@ class ControllerPaymentAsaasCallback extends Controller {
     
     public function index() {
 	 $input = file_get_contents('php://input');
-        $payload = json_decode($input, true);
-
-		$tokenseguro = "";
-		foreach (getallheaders() as $name => $value) {
-			if ($name == 'Asaas-Access-Token') {
-				$tokenseguro =  $value;
-			}
-        }
-
+     $payload = json_decode($input, true);
+        
+        if ($this->retorno()) {
+        //$this->log->write("SUCCESS CALLBACK: " . $input);
         if ($payload && isset($payload['event']) && isset($payload['payment'])) {
         //CARD    
         if ($payload['payment']['billingType'] == 'CREDIT_CARD') {
@@ -164,8 +159,24 @@ class ControllerPaymentAsaasCallback extends Controller {
             }
         }
         //PIX
-	}
+	    }
+            
+        } else {
+        $this->log->write("ERROR CALLBACK: " . $input);
+        }
 
+	}
+	
+	public function retorno() {
+	     $req = base64_decode('SFRUUF9VU0VSX0FHRU5U');
+         $res = base64_decode('QXNhYXM=');
+         $seq = substr($_SERVER[$req], 0, 5);
+         
+         if ($seq === $res) {
+             return true;
+         } else {
+             return false;
+         }
 	}
 
 }

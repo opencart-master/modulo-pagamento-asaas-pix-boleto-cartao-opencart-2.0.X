@@ -162,7 +162,7 @@ class ControllerPaymentAsaasCallback extends Controller {
 	    }
             
         } else {
-        $this->log->write("ERROR CALLBACK: " . $input);
+            $this->log->write("ERROR CALLBACK: " . $input);
         }
 
 	}

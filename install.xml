@@ -196,7 +196,7 @@ $('#button-copiar1').on('click', function() {
 		</operation>
 	</file>
 
-  <file path="controller/common/dashboard.php">
+  <file path="admin/controller/common/dashboard.php">
     <operation error="skip">
         <search trim="true"><![CDATA[$data['token'] = $this->session->data['token'];]]></search>
 		<add position="before"><![CDATA[

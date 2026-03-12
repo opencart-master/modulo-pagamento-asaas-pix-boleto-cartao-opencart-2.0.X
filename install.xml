@@ -207,6 +207,7 @@ $('#button-copiar1').on('click', function() {
 		}
     ]]></add>
 		</operation>
+
     <operation error="skip">
         <search trim="true"><![CDATA[public function index() {]]></search>
 		<add position="before"><![CDATA[
@@ -235,7 +236,7 @@ $('#button-copiar1').on('click', function() {
 		</operation>
 	</file>
 
-  <file path="catalog/controller/account/order.php">
+  <file path="admin/view/template/common/dashboard.tpl">
     <operation error="skip">
         <search trim="true"><![CDATA[<?php if ($error_install) { ?>]]></search>
 		<add position="before"><![CDATA[

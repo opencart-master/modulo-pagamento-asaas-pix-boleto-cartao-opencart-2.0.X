@@ -201,7 +201,7 @@ $('#button-copiar1').on('click', function() {
         <search trim="true"><![CDATA[$data['token'] = $this->session->data['token'];]]></search>
 		<add position="before"><![CDATA[
     if($this->version()) {
-		   $data['update_asaas'] = 'Nova versão do módulo <b>Asaas</b> disponivel para <a href="https://www.opencart.com/index.php?route=marketplace/extension/info&member_token=191afa245fa684709e024de64795d503&extension_id=48210" target="_black">Download</a>!'; 
+		   $data['update_asaas'] = 'Nova versão do módulo <b>Asaas</b> disponível para <a href="https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=48210" target="_blank">Download</a>!'; 
 		} else {
 		   $data['update_asaas'] = '';
 		}

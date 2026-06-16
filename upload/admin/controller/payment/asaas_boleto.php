@@ -150,7 +150,7 @@ class ControllerPaymentAsaasBoleto extends Controller {
 		} elseif(!empty($this->config->get('asaas_wb'))) {
 			$data['asaas_wb'] = $this->config->get('asaas_wb');
 		} else {
-			$data['asaas_wb'] = uniqid();
+			$data['asaas_wb'] = md5(uniqid());
 		}
 
 		if (isset($this->request->post['asaas_boleto_sort_order'])) {

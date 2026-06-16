@@ -257,7 +257,7 @@ class ControllerPaymentAsaasPix extends Controller {
 
 		$this->load->model('setting/setting');
 	
-		$resposta = $asaas->createWebhooks($webhook);
+		$resposta = json_decode($asaas->createWebhooks($webhook), true);
 
 		if(isset($resposta['errors'])) {
 		$this->error['warning'] = $resposta['errors'][0]['description'];	

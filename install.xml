@@ -19,11 +19,6 @@
 		$order_info = $this->model_checkout_order->getOrder($ord);
         		
 		if ($order_info && $order_info['payment_code'] == 'asaas_pix') {
-    if ($this->config->get('asaas_pix_mode')) {
-			$mode = false;
-		} else {
-			$mode = true;
-		}
           $payid = $this->getLink($ord);
           $res_api = $this->getPay($payid);
           $data['qrcode'] = 'data:image/png;base64, ' . $res_api['pix']['encodedImage'];
@@ -34,11 +29,6 @@
 		}
 
     if ($order_info && $order_info['payment_code'] == 'asaas_boleto') {
-    if ($this->config->get('asaas_boleto_mode')) {
-			$mode = false;
-		} else {
-			$mode = true;
-		}
           $payid = $this->getLink2($ord);
           $res_api = $this->getPay($payid);
           $data['barcode'] = $res_api['bankSlip']['barCode'];

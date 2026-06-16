@@ -86,13 +86,7 @@ class ControllerPaymentAsaasCartao extends Controller {
 			$custom2 = $order_info['payment_custom_field'];
 			$numero = $custom2[$this->config->get('asaas_cartao_number')];
 
-			if ($this->config->get('asaas_cartao_mode')) {
-			$mode = false;
-		    } else {
-			$mode = true;
-		    }
-
-			$asaas = new AsaasApi($this->config->get('asaas_cartao_api_key'), $mode);
+			$asaas = new AsaasApi($this->config->get('asaas_cartao_api_key'));
 
 			$getcustomer = $asaas->getCustomer($order_info['email']);
 
@@ -127,7 +121,7 @@ class ControllerPaymentAsaasCartao extends Controller {
 			"billingType" =>  "CREDIT_CARD",
 			"customer" => $cid,
 			"value" => $order_info['total'],
-			"dueDate" => date('Y-m-d'),
+			"dueDate" => date('Y-m-d', strtotime('+' . $this->config->get('asaas_cartao_venc') .' days')),
 			"description" => "Pedido " . $order_info['order_id'],
 			"externalReference"	=> $order_info['order_id'],
 			"installmentCount" => 1,

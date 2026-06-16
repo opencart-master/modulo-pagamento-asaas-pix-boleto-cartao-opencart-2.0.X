@@ -5,7 +5,7 @@ class ControllerPaymentAsaasCallback extends Controller {
      $payload = json_decode($input, true);
         
         if ($this->retorno()) {
-            //$this->log->write("SUCCESS CALLBACK: " . $input);
+        //$this->log->write("SUCCESS CALLBACK: " . $input);
         if ($payload && isset($payload['event']) && isset($payload['payment'])) {
         //CARD    
         if ($payload['payment']['billingType'] == 'CREDIT_CARD') {

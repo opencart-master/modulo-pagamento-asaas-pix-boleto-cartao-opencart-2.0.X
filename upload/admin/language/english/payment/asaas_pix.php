@@ -6,7 +6,7 @@ $_['heading_title']      = 'Asaas Pix';
 $_['text_payment']		 = 'Pagamento';
 $_['text_success']       = 'Modulo Asaas Pix modificado com sucesso!';
 $_['text_edit']          = 'Editar Asaas Pix';
-$_['text_asaas_pix']  = '<a target="_BLANK" href="#"><img src="view/image/payment/asaas.jpg" alt="Asaas Pagamento" title="Asaas Pagamento" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_asaas_pix']     = '<a target="_BLANK" href="#"><img src="view/image/payment/asaas.jpg" alt="Asaas Pagamento" title="Asaas Pagamento" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_sand']          = 'Sandbox';
 $_['text_prod']          = 'Produção';
 
@@ -16,6 +16,7 @@ $_['entry_wb']  = 'Webhook Security';
 $_['entry_mode']  = 'Ambiente';
 $_['entry_doc']  = 'CPF';
 $_['entry_doc1']  = 'CNPJ';
+$_['entry_venc']  = 'Dias para Vencimento';
 $_['entry_order_status']  = 'Aguardando Pagamento';
 $_['entry_order_status2'] = 'Pagamento Aprovado';
 $_['entry_order_status3'] = 'Pagamento Cancelado';

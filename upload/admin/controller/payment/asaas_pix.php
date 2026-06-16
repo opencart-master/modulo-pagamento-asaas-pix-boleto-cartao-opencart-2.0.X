@@ -17,9 +17,8 @@ class ControllerPaymentAsaasPix extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			if($this->config->get('asaas_pix_mode')){$mode=false;}else{$mode=true;}
-			$asaas = new AsaasApi($this->config->get('asaas_pix_api_key'), $mode);
-			$sandbox = $asaas->checkSandbox('');
+			$asaas = new AsaasApi($this->config->get('asaas_pix_api_key'));
+			$sandbox = $asaas->checkSandbox($this->config->get('asaas_pix_api_key'));
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -39,6 +38,7 @@ class ControllerPaymentAsaasPix extends Controller {
 		$data['entry_mode'] = $this->language->get('entry_mode');
 		$data['entry_doc'] = $this->language->get('entry_doc');
 		$data['entry_doc1'] = $this->language->get('entry_doc1');
+		$data['entry_venc'] = $this->language->get('entry_venc');
 		$data['entry_total'] = $this->language->get('entry_total');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_order_status2'] = $this->language->get('entry_order_status2');
@@ -137,12 +137,6 @@ class ControllerPaymentAsaasPix extends Controller {
 			$data['asaas_pix_order_status_id5'] = $this->config->get('asaas_pix_order_status_id5');
 		}
 
-		if (isset($this->request->post['asaas_pix_mode'])) {
-			$data['asaas_pix_mode'] = $this->request->post['asaas_pix_mode'];
-		} else {
-			$data['asaas_pix_mode'] = $this->config->get('asaas_pix_mode');
-		}
-
 		$this->load->model('localisation/order_status');
 
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
@@ -179,6 +173,14 @@ class ControllerPaymentAsaasPix extends Controller {
 			$data['asaas_pix_doc1'] = $this->config->get('asaas_pix_doc1');
 		}
 
+		if (isset($this->request->post['asaas_pix_venc'])) {
+			$data['asaas_pix_venc'] = $this->request->post['asaas_pix_venc'];
+		} elseif (!empty($this->config->get('asaas_pix_venc'))) {
+		    $data['asaas_pix_venc'] = $this->config->get('asaas_pix_venc');
+		} else {
+			$data['asaas_pix_venc'] = 1;
+		}	
+
 		$this->load->model('sale/custom_field');
 		
         $data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
@@ -208,7 +210,7 @@ class ControllerPaymentAsaasPix extends Controller {
 
 	public function install() {
 		require_once(DIR_SYSTEM . 'library/asaas/asaas_api.php');
-        $asaas = new AsaasApi('', true);
+        $asaas = new AsaasApi($this->config->get('asaas_pix_api_key'));
 	    $check = $asaas->check();
     }
 
@@ -223,6 +225,9 @@ class ControllerPaymentAsaasPix extends Controller {
     }
 
 	public function webhook() {
+		require_once(DIR_SYSTEM . 'library/asaas/asaas_api.php');
+		$asaas = new AsaasApi($this->config->get('asaas_pix_api_key'));
+
 		$this->load->language('extension/payment/asaas_pix');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -251,12 +256,8 @@ class ControllerPaymentAsaasPix extends Controller {
 		));
 
 		$this->load->model('setting/setting');
-		if ($this->config->get('asaas_pix_mode')) {
-			$mode = false;
-		} else {
-			$mode = true;
-		}
-		$resposta = $this->createWebhook($webhook, $mode);
+	
+		$resposta = $asaas->createWebhooks($webhook);
 
 		if(isset($resposta['errors'])) {
 		$this->error['warning'] = $resposta['errors'][0]['description'];	
@@ -266,28 +267,5 @@ class ControllerPaymentAsaasPix extends Controller {
 
 		$this->index();
 	}
-
-	public function createWebhook($json_convert, $sandbox = true) {
-		$url =  $sandbox ? 'https://sandbox.asaas.com/api/v3/' : 'https://www.asaas.com/api/v3/';
-    	$token = $this->config->get('asaas_pix_api_key');
-		$user_agent = base64_decode('TWFzdGVyLzEuMC4wLjAgKFBsYXRhZm9ybWEgb3BlbmNhcnQuY29tIC0gREVWIE9wZW5jYXIgTWFzdGVyKQ==');
-    	$headers = array('Accept: application/json', 'Content-Type: application/json;charset=UTF-8', 'User-Agent: ' . $user_agent , 'access_token: ' . $token);
-        $soap_do = curl_init();
-        curl_setopt($soap_do, CURLOPT_URL, $url . 'webhooks');
-        curl_setopt($soap_do, CURLOPT_CONNECTTIMEOUT, 10);
-        curl_setopt($soap_do, CURLOPT_TIMEOUT,        10);
-        curl_setopt($soap_do, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($soap_do, CURLOPT_RETURNTRANSFER, true );
-        curl_setopt($soap_do, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($soap_do, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($soap_do, CURLOPT_POST,           true );
-        curl_setopt($soap_do, CURLOPT_HTTPHEADER,     $headers);
-        curl_setopt($soap_do, CURLOPT_POSTFIELDS,     $json_convert);
-        
-        $response = curl_exec($soap_do); 
-        curl_close($soap_do);
-        $resposta = json_decode($response, true);
-        return  $resposta;
-    }
 
 }

@@ -67,7 +67,7 @@ class ControllerPaymentAsaasPix extends Controller {
 			$this->cadId($payment['id'], $order_info['order_id']);
 		    $comment .= "Pagamento ID: " . $payment['id'] . "\n";
 		     $comment .= "Link do QRCODE: <a href='" . $payment['invoiceUrl'] . "' class='label label-info' target='_blank'> VER 2ª via Pix </a> \n";
-		    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('asaas_pix_order_status_id'), $comment, true;
+		    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('asaas_pix_order_status_id'), $comment, true);
 		    $json['redirect'] = $this->url->link('checkout/success');
 			} else {
 			$json['redirect2'] = $this->url->link('checkout/failure');

@@ -184,6 +184,8 @@ class ControllerPaymentAsaasPix extends Controller {
 		$this->load->model('sale/custom_field');
 		
         $data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
+        
+        $data['success'] = isset($this->session->data['success']) ? $this->session->data['success'] : '';
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');
@@ -232,7 +234,7 @@ class ControllerPaymentAsaasPix extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$webhook = json_encode(array(
+		$webhook = array(
 		"events" => [
 			"PAYMENT_AUTHORIZED",
     		"PAYMENT_CONFIRMED",
@@ -253,11 +255,11 @@ class ControllerPaymentAsaasPix extends Controller {
 		"sendType" => "SEQUENTIALLY",
 		"interrupted" => false,
 		"email" => $this->config->get('config_email')
-		));
+		);
 
 		$this->load->model('setting/setting');
 	
-		$resposta = json_decode($asaas->createWebhooks($webhook), true);
+		$resposta = $asaas->createWebhooks($webhook);
 
 		if(isset($resposta['errors'])) {
 		$this->error['warning'] = $resposta['errors'][0]['description'];	
